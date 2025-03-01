@@ -1,0 +1,11 @@
+name,description
+Draft,The invoice has been created but not yet completed or sent.
+Sent,The invoice has been sent to the client but not yet paid.
+Paid,The invoice has been fully settled by the client.
+Partially paid,Only part of the invoice amount has been paid.
+Overdue,"The payment due date has passed, and the invoice is still unpaid."
+Canceled,The invoice has been voided and is no longer valid.
+Rejected,The client has disputed or rejected the invoice.
+Refunded,The invoice amount has been reimbursed to the client.
+Under review,The invoice is being checked for corrections or approvals.
+Archived,The invoice has been closed and stored for future reference.
