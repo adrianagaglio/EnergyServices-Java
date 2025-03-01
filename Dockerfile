@@ -11,5 +11,5 @@ RUN mvn clean install -DskipTests
 # Stage finale: runtime
 FROM eclipse-temurin:21
 WORKDIR /app
-COPY --from=builder /app/target/nome-app.jar .
+COPY --from=builder /app/target/energyservices-0.0.1-SNAPSHOT.jar .
 CMD ["java", "-jar", "energyservices-0.0.1-SNAPSHOT.jar"]
