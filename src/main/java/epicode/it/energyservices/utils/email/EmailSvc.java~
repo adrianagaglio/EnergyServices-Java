@@ -37,7 +37,7 @@ public class EmailSvc {
         message.setText(request.getBody());
         message.setFrom(from);
 
-//        mailSender.send(message);
+        mailSender.send(message);
         return "Mail successfully sent to " + request.getTo();
     }
 
@@ -52,7 +52,7 @@ public class EmailSvc {
             helper.setText(request.getBody(), true);
             helper.setFrom(from);
 
-//            mailSender.send(message);
+            mailSender.send(message);
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
