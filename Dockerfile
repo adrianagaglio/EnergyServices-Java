@@ -10,9 +10,10 @@ WORKDIR /app
 COPY target/*.jar app.jar
 
 
+
 # Esponi la porta su cui l'applicazione Spring Boot è in ascolto
 EXPOSE 8080
 
 
 # Comando per eseguire l'applicazione
-ENTRYPOINT ["java", "-jar", "app.jar"]
+#ENTRYPOINT ["java", "-jar", "app.jar"]

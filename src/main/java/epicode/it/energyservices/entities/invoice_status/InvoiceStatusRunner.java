@@ -21,7 +21,7 @@ public class InvoiceStatusRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        String csvFile = "src/main/resources/invoice_statuses.csv";
+        String csvFile = getClass().getClassLoader().getResource("invoice_statuses.csv").getPath();
 
 
         if (invoiceStatusSvc.count() == 0) {

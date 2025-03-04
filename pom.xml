@@ -153,6 +153,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>energyservices-be</finalName>
     </build>
 
 </project>
