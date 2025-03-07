@@ -11,6 +11,6 @@ public class AddressResponse {
     private String street;
     private String addressNumber;
     private int cap;
-    private City city;
+    private String city;
     private CustomerResponseForAddress customer;
 }

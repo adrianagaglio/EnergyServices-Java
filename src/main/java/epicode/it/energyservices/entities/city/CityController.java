@@ -15,8 +15,8 @@ import java.util.List;
 public class CityController {
     private final CitySvc citySvcSvc;
 
-    @GetMapping
-    public ResponseEntity<List<City>> getAllCities(@RequestParam String district){
+    @GetMapping("/{district}")
+    public ResponseEntity<List<City>> getCitiesByDistrict(@PathVariable String district){
         return ResponseEntity.ok(citySvcSvc.getCitiesByDistrict(district));
     }
 }

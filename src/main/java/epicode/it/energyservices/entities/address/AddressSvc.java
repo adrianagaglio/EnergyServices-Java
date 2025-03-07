@@ -57,17 +57,17 @@ public class AddressSvc {
 
     // salva un nuovo Address
     public Address saveAddress(Address request) {
-/*        City city = cityRepo.findById(request.getIdCity())
-                .orElseThrow(() -> new EntityNotFoundException("The city you are looking for does not exist"));
-
         Address newAddress = new Address();
         newAddress.setStreet(request.getStreet());
         newAddress.setAddressNumber(request.getAddressNumber());
-        newAddress.setLocation(request.getLocation());
+        newAddress.setDistrict(request.getDistrict());
+        newAddress.setDistrictCode(request.getDistrictCode());
         newAddress.setCap(request.getCap());
-        newAddress.setCity(city);*/
+        newAddress.setCity(request.getCity());
         return addressRepo.save(request);
     }
+
+//    ‼️ TO-DO: completare creazione nuovo indirizzo (allineare dati tra fe e be)
 
     // modifica un address esistente
     public AddressResponse updateAddress(Long id, AddressCreateRequest updatedRequest, @AuthenticationPrincipal UserDetails userDetails ) {

@@ -14,4 +14,5 @@ public class AddressCreateRequest {
     private int cap;
     @NotNull (message = "idCity can't be empty")
     private String city;
+    private String district;
 }
