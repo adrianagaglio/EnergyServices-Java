@@ -38,7 +38,7 @@ public class InvoiceRunner implements ApplicationRunner {
                 try {
                     invoiceSvc.create(request);
                 } catch (RuntimeException e) {
-                    System.out.println(request);
+                    System.out.println("in errore " + request);
                     System.out.println(e.getMessage());
                 }
             }
@@ -54,7 +54,7 @@ public class InvoiceRunner implements ApplicationRunner {
                 try {
                     invoiceSvc.create(request);
                 } catch (RuntimeException e) {
-                    System.out.println(request);
+                    System.out.println("in errore " + request);
                     System.out.println(e.getMessage());
                 }
             }

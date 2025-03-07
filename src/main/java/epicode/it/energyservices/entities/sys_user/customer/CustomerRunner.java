@@ -72,7 +72,7 @@ public class CustomerRunner implements ApplicationRunner {
                 try {
                     appUserSvc.registerUser(request);
                 } catch (RuntimeException e) {
-                    System.out.println("===> " + request);
+                    System.out.println("in errore " + request);
                     System.out.println(e.getMessage());
                 }
             }
