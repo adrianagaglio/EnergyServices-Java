@@ -31,7 +31,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest loginRequest) {
-        return new ResponseEntity<>(appUserSvc.Login(loginRequest), HttpStatus.OK);
+        return new ResponseEntity<>(appUserSvc.login(loginRequest), HttpStatus.OK);
     }
 
     @PostMapping("/requestChangePassword")

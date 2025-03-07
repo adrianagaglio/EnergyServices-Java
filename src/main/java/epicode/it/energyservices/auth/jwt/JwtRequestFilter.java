@@ -30,6 +30,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         String username = null;
         String jwtToken = null;
+        boolean isTokenExipired = false;
 
         // Estrae il token JWT dal header Authorization
         if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
@@ -39,17 +40,26 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             } catch (IllegalArgumentException e) {
                 System.out.println("Impossibile ottenere il token JWT");
             } catch (ExpiredJwtException e) {
-                System.out.println("Il token JWT è scaduto");
+                System.out.println("Il token JWT è scaduto, sto generando un nuovo token...");
+                username = e.getClaims().getSubject(); // recupero lo username dal token scaduto
+                isTokenExipired = true;
             }
         } else {
-            // logger.warn("Il token JWT non inizia con Bearer");
-                chain.doFilter(request, response);
+            chain.doFilter(request, response);
             return;
         }
 
         // Valida il token e configura l'autenticazione nel contesto di sicurezza
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.customUserDetailsService.loadUserByUsername(username);
+
+            // se il token è scaduto, ne genero uno nuovo e lo uso per la validazione
+            if(isTokenExipired) {
+                jwtToken = jwtTokenUtil.generateToken(userDetails);
+                response.setHeader("Authorization", "Bearer " + jwtToken);
+            }
+
+            // validazione del token
             if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
@@ -57,7 +67,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
         }
-            chain.doFilter(request, response);
+        chain.doFilter(request, response);
 
     }
 }
