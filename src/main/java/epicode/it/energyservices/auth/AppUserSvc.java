@@ -112,7 +112,7 @@ public class AppUserSvc {
         return "Admin registrato con successo";
     }
 
-    public AuthResponse Login(@Valid LoginRequest loginRequest) {
+    public AuthResponse login(@Valid LoginRequest loginRequest) {
         {
             try {
                 Authentication authentication = authenticationManager.authenticate(
@@ -120,7 +120,9 @@ public class AppUserSvc {
                 );
 
                 UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-                return new AuthResponse(jwtTokenUtil.generateToken(userDetails));
+                String token = jwtTokenUtil.generateToken(userDetails);
+                String role = jwtTokenUtil.getRoleFromToken(token);
+                return new AuthResponse(token, role);
             } catch (AuthenticationException e) {
                 throw new SecurityException("Credenziali non valide", e);
             }
