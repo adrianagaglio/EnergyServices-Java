@@ -1,34 +1,49 @@
 package epicode.it.energyservices.entities.district;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import epicode.it.energyservices.entities.district.dto.DistrictMapper;
+import epicode.it.energyservices.entities.district.dto.ProvinceHttpResponse;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.List;
 
 @Service
 @AllArgsConstructor
 @Validated
 public class DistrictSvc {
-    private final DistrictRepo districtRepo;
+    private final DistrictMapper mapper;
 
-    // restituisco tutti i Districts
-    public List<District> findAllDistricts() {
-        return districtRepo.findAll();
-    }
+    public List<District> getDistricts() {
+        String url = "https://axqvoqvbfjpaamphztgd.functions.supabase.co/province";
+        HttpClient httpClient = HttpClient.newHttpClient();
 
-    // restituisco un district cercando per id
-    public District findDistrictById(Long id) {
-        return districtRepo.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("The district you are looking for does not exist"));
-    }
+        HttpRequest httpRequest = HttpRequest.newBuilder().uri(URI.create(url)).GET().build();
 
-    public List<District> findByRegion(String region) {
-        return districtRepo.findByRegionIgnoreCase(region);
-    }
+        HttpResponse<String> response = null;
 
-    public int count() {
-        return (int) districtRepo.count();
+        try {
+            response = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return mapper.toDistrictList(objectMapper.readValue(response.body(), new TypeReference<List<ProvinceHttpResponse>>() {
+            }));
+        } catch(IOException e) {
+            throw new RuntimeException("Errore durante il parsing del JSON");
+        }
     }
 }

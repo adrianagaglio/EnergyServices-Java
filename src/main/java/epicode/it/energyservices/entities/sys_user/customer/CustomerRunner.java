@@ -6,12 +6,16 @@ import epicode.it.energyservices.auth.dto.RegisterRequest;
 import epicode.it.energyservices.entities.address.dto.AddressCreateRequest;
 import epicode.it.energyservices.entities.city.City;
 import epicode.it.energyservices.entities.city.CitySvc;
+import epicode.it.energyservices.entities.district.District;
+import epicode.it.energyservices.entities.district.DistrictSvc;
 import epicode.it.energyservices.entities.sys_user.customer.dto.CustomerRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -21,6 +25,7 @@ public class CustomerRunner implements ApplicationRunner {
     private final AppUserSvc appUserSvc;
     private final CustomerSvc customerSvc;
     private final CitySvc citySvc;
+    private final DistrictSvc districtSvc;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -38,18 +43,24 @@ public class CustomerRunner implements ApplicationRunner {
                 int random = faker.random().nextInt(0, 3);
                 customer.setType(Type.values()[random]);
 
-                City city = citySvc.findCityById((long) faker.number().numberBetween(1, 1000));
+                List<District> districts = districtSvc.getDistricts();
+                District d = districts.get(faker.random().nextInt(districts.size()));
+
+                List<City> cities = citySvc.getCitiesByDistrict(d.getName());
+                City c = cities.get(faker.random().nextInt(cities.size()));
+
                 AddressCreateRequest addressRequest = new AddressCreateRequest();
                 addressRequest.setAddressNumber(String.valueOf(faker.number().numberBetween(1, 1000)));
                 addressRequest.setCap(faker.number().numberBetween(10000, 99999));
                 addressRequest.setStreet(faker.address().streetAddress());
-                addressRequest.setIdCity(city.getId());
-                City city1 = citySvc.findCityById((long) faker.number().numberBetween(1, 1001));
+                addressRequest.setCity(c.getName());
+
+                City c2 = cities.get(faker.random().nextInt(cities.size()));
                 AddressCreateRequest addressRequest1 = new AddressCreateRequest();
                 addressRequest1.setAddressNumber(String.valueOf(faker.number().numberBetween(1, 1000)));
                 addressRequest1.setCap(faker.number().numberBetween(10000, 99999));
                 addressRequest1.setStreet(faker.address().streetAddress());
-                addressRequest1.setIdCity(city1.getId());
+                addressRequest1.setCity(c2.getName());
                 customer.setOperationalHeadquartersAddress(addressRequest);
                 customer.setRegisteredOfficeAddress(addressRequest1);
 

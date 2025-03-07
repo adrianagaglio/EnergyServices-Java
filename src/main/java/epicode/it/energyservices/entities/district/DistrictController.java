@@ -14,18 +14,15 @@ import java.util.List;
 public class DistrictController {
 
     private final DistrictSvc districtSvc;
-    @GetMapping("/{id}")
-    public ResponseEntity<District> getDistrictById(@PathVariable Long id){
-        return ResponseEntity.ok(districtSvc.findDistrictById(id));
-    }
 
-    @GetMapping("region/{region}")
-    public ResponseEntity<List<District>> getDistrictByRegion(@PathVariable String region){
-        return ResponseEntity.ok(districtSvc.findByRegion(region));
-    }
+
+//    @GetMapping("region/{region}")
+//    public ResponseEntity<List<District>> getDistrictByRegion(@PathVariable String region){
+//        return ResponseEntity.ok(districtSvc.findByRegion(region));
+//    }
 
     @GetMapping
     public ResponseEntity<List<District>> getAllDistricts(){
-        return ResponseEntity.ok(districtSvc.findAllDistricts());
+        return ResponseEntity.ok(districtSvc.getDistricts());
     }
 }

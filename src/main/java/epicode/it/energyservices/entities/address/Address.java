@@ -15,9 +15,7 @@ public class Address {
     private String street;
     private String addressNumber;
     private int cap;
-    @ManyToOne
-    @JoinColumn(name = "city_id", referencedColumnName = "id")
-    private City city;
+    private String city;
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;

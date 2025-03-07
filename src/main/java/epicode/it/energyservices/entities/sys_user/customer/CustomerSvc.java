@@ -113,7 +113,7 @@ public class CustomerSvc {
             AddressCreateRequest operationalAddress = request.getOperationalHeadquartersAddress();
             Address a = new Address();
             a.setCap(operationalAddress.getCap());
-            a.setCity(citySvc.findCityById(operationalAddress.getIdCity()));
+            a.setCity(operationalAddress.getCity());
             a.setStreet(operationalAddress.getStreet());
             a.setAddressNumber(operationalAddress.getAddressNumber());
             a.setCustomer(customer);
@@ -124,7 +124,7 @@ public class CustomerSvc {
             AddressCreateRequest registeredAddress = request.getRegisteredOfficeAddress();
             Address a = new Address();
             a.setCap(registeredAddress.getCap());
-            a.setCity(citySvc.findCityById(registeredAddress.getIdCity()));
+            a.setCity(registeredAddress.getCity());
             a.setStreet(registeredAddress.getStreet());
             a.setAddressNumber(registeredAddress.getAddressNumber());
             a.setCustomer(customer);
