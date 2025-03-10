@@ -116,6 +116,8 @@ public class CustomerSvc {
             a.setCity(operationalAddress.getCity());
             a.setStreet(operationalAddress.getStreet());
             a.setAddressNumber(operationalAddress.getAddressNumber());
+            a.setDistrict(operationalAddress.getDistrict());
+            a.setDistrictCode(operationalAddress.getDistrictCode());
             a.setCustomer(customer);
             addressMap.put("OperationalHeadquartersAddress", a);
         }
@@ -127,6 +129,8 @@ public class CustomerSvc {
             a.setCity(registeredAddress.getCity());
             a.setStreet(registeredAddress.getStreet());
             a.setAddressNumber(registeredAddress.getAddressNumber());
+            a.setDistrict(registeredAddress.getDistrict());
+            a.setDistrictCode(registeredAddress.getDistrictCode());
             a.setCustomer(customer);
             addressMap.put("RegisteredOfficeAddress", a);
         }

@@ -23,6 +23,6 @@ public class CustomerResponseForInvoice {
     private String phone;
     private String contactPhone;
     private Type type;
-    private Map<String, AddressResponseForCustomer> addresses = new HashMap<>(); // collegare a entità indirizzo
+    private Map<String, AddressResponseForCustomer> addresses = new HashMap<>();
 
 }

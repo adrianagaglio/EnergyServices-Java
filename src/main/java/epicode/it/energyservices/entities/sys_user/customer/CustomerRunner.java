@@ -54,6 +54,8 @@ public class CustomerRunner implements ApplicationRunner {
                 addressRequest.setCap(faker.number().numberBetween(10000, 99999));
                 addressRequest.setStreet(faker.address().streetAddress());
                 addressRequest.setCity(c.getName());
+                addressRequest.setDistrict(c.getDistrictName());
+                addressRequest.setDistrictCode(d.getCode());
 
                 City c2 = cities.get(faker.random().nextInt(cities.size()));
                 AddressCreateRequest addressRequest1 = new AddressCreateRequest();
@@ -61,6 +63,8 @@ public class CustomerRunner implements ApplicationRunner {
                 addressRequest1.setCap(faker.number().numberBetween(10000, 99999));
                 addressRequest1.setStreet(faker.address().streetAddress());
                 addressRequest1.setCity(c2.getName());
+                addressRequest1.setDistrict(c2.getDistrictName());
+                addressRequest1.setDistrictCode(d.getCode());
                 customer.setOperationalHeadquartersAddress(addressRequest);
                 customer.setRegisteredOfficeAddress(addressRequest1);
 

@@ -13,6 +13,8 @@ public class AddressMapper {
 
     public AddressResponse toAddressResponse(Address e) {
         AddressResponse addressResponse = modelMapper.map(e, AddressResponse.class);
+        addressResponse.setDistrict(e.getDistrict());
+        addressResponse.setDistrictCode(e.getDistrictCode());
         return addressResponse;
     }
 
@@ -22,6 +24,8 @@ public class AddressMapper {
 
     public AddressResponseForCustomer toAddressResponseForCustomer(Address e) {
         AddressResponseForCustomer addressResponseForCustomer = modelMapper.map(e, AddressResponseForCustomer.class);
+        addressResponseForCustomer.setDistrict(e.getDistrict());
+        addressResponseForCustomer.setDistrictCode(e.getDistrictCode());
         return addressResponseForCustomer;
     }
 

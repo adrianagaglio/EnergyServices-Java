@@ -12,7 +12,7 @@ public class DistrictMapper {
         District d = new District();
         d.setName(request.getNome());
         d.setRegion(request.getRegione());
-        d.setCode(request.getCodice());
+        d.setCode(request.getSigla());
         return d;
     }
 
