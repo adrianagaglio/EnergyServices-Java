@@ -42,12 +42,14 @@ public class AuthController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+
     @GetMapping("/reset-password")
     public ResponseEntity<String> resetPasswordRedirect(@RequestParam String token, HttpServletResponse response) {
 
         return new ResponseEntity<>(appUserSvc.verifyTokenPasswordReset(token, response), HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "*")
     @PatchMapping("/reset-password")
     public ResponseEntity<Map<String, String>> resetPassword(@RequestBody PasswordResetRequest passwordResetRequest) {
         String message = appUserSvc.resetPassword(passwordResetRequest);
@@ -59,7 +61,7 @@ public class AuthController {
     @GetMapping("/withAppUser")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<AppUserResponse> getByCustomerWithAppUser(@AuthenticationPrincipal User userDetails) {
-        System.out.println(userDetails.getUsername());
+
         AppUser appUser = appUserSvc.getByUsername(userDetails.getUsername());
         AppUserResponse response = new AppUserResponse();
         response.setId(appUser.getId());
@@ -76,7 +78,7 @@ public class AuthController {
     public ResponseEntity<AppUserResponse> updateByCustomerWithAppUser(@RequestBody AppUserResponse appUserUpdateRequest, @AuthenticationPrincipal User userDetails) {
 
         AppUserResponse response = appUserSvc.updateUser(appUserUpdateRequest, userDetails);
-        System.out.println(response);
+
         return ResponseEntity.ok(response);
     }
 

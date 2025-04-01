@@ -39,7 +39,7 @@ public class InvoiceController {
 
     @GetMapping("/byCustomer")
     @PreAuthorize("hasRole('CUSTOMER')")
-    public ResponseEntity<List<InvoiceResponseForCustomer>> getAllByCustomer(@AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<List<InvoiceResponse>> getAllByCustomer(@AuthenticationPrincipal UserDetails userDetails) {
         System.out.println("ciao");
         return ResponseEntity.ok(invoiceSvc.getAllByCustomer(userDetails.getUsername()));
     }

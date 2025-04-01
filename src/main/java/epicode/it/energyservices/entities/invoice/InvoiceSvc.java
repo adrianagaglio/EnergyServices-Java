@@ -38,9 +38,9 @@ public class InvoiceSvc {
         return mapper.toInvoiceResponseList(invoiceRepo.findAll());
     }
 
-    public List<InvoiceResponseForCustomer> getAllByCustomer(String username) {
+    public List<InvoiceResponse> getAllByCustomer(String username) {
         Long customerId = customerSvc.getByUsername(username).getId();
-        return mapper.toInvoiceResponseForCustomerList(invoiceRepo.findAllByCustomerIdOrderByNumberDesc(customerId));
+        return mapper.toInvoiceResponseList(invoiceRepo.findAllByCustomerIdOrderByNumberDesc(customerId));
     }
 
     public Page<InvoiceResponse> getAllPageable(Pageable pageable) {
