@@ -4,6 +4,7 @@ import epicode.it.energyservices.entities.invoice_status.InvoiceStatus;
 import epicode.it.energyservices.entities.sys_user.customer.Customer;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 import java.time.LocalDate;
 
@@ -25,6 +26,7 @@ public class Invoice {
     private int number = 1;
 
     @ManyToOne
+    @ToString.Exclude
     private Customer customer;
 
     @ManyToOne

@@ -4,9 +4,6 @@ import epicode.it.energyservices.entities.address.dto.AddressCreateRequest;
 import epicode.it.energyservices.entities.address.dto.AddressMapper;
 import epicode.it.energyservices.entities.address.dto.AddressResponse;
 import epicode.it.energyservices.entities.address.dto.AddressResponseForCustomer;
-import epicode.it.energyservices.entities.city.City;
-import epicode.it.energyservices.entities.city.CityRepo;
-import epicode.it.energyservices.entities.invoice.dto.InvoiceResponseForCustomer;
 import epicode.it.energyservices.entities.sys_user.customer.CustomerSvc;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
@@ -23,7 +20,6 @@ import java.util.List;
 @Validated
 public class AddressSvc {
     private final AddressRepo addressRepo;
-    private final CityRepo cityRepo;
     private final AddressMapper mapper;
     private final CustomerSvc customerSvc;
 
@@ -61,17 +57,17 @@ public class AddressSvc {
 
     // salva un nuovo Address
     public Address saveAddress(Address request) {
-/*        City city = cityRepo.findById(request.getIdCity())
-                .orElseThrow(() -> new EntityNotFoundException("The city you are looking for does not exist"));
-
         Address newAddress = new Address();
         newAddress.setStreet(request.getStreet());
         newAddress.setAddressNumber(request.getAddressNumber());
-        newAddress.setLocation(request.getLocation());
+        newAddress.setDistrict(request.getDistrict());
+        newAddress.setDistrictCode(request.getDistrictCode());
         newAddress.setCap(request.getCap());
-        newAddress.setCity(city);*/
+        newAddress.setCity(request.getCity());
         return addressRepo.save(request);
     }
+
+//    ‼️ TO-DO: completare creazione nuovo indirizzo (allineare dati tra fe e be)
 
     // modifica un address esistente
     public AddressResponse updateAddress(Long id, AddressCreateRequest updatedRequest, @AuthenticationPrincipal UserDetails userDetails ) {
@@ -79,18 +75,17 @@ public class AddressSvc {
         Address existingAddress = addressRepo.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("The address you are looking for does not exist"));
 
-        City city = cityRepo.findById(updatedRequest.getIdCity())
-                .orElseThrow(() -> new EntityNotFoundException("The city you are looking for does not exist"));
+
 
         if (userDetails.getAuthorities().stream()
-                .anyMatch(authority -> authority.getAuthority().equals("ROLE_CUSTOMER")) && !existingAddress.getCustomer().getAppUser().getUsername().equals(userDetails.getUsername())){
+                .anyMatch(authority -> authority.getAuthority().equals("CUSTOMER")) && !existingAddress.getCustomer().getAppUser().getUsername().equals(userDetails.getUsername())){
             throw new InvalidParameterException("You are not the owner of this address");
         }
 
         existingAddress.setStreet(updatedRequest.getStreet());
         existingAddress.setAddressNumber(updatedRequest.getAddressNumber());
         existingAddress.setCap(updatedRequest.getCap());
-        existingAddress.setCity(city);
+        existingAddress.setCity(updatedRequest.getCity());
 
         return mapper.toAddressResponse(addressRepo.save(existingAddress)) ;
     }

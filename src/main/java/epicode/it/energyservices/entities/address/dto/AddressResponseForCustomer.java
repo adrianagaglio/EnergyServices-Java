@@ -9,6 +9,8 @@ public class AddressResponseForCustomer {
     private String street;
     private String addressNumber;
     private int cap;
-    private City city;
+    private String city;
+    private String district;
+    private String districtCode;
 
 }

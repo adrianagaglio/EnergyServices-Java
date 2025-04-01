@@ -1,6 +1,9 @@
 package epicode.it.energyservices.entities.sys_user.customer.dto;
 
 
+import epicode.it.energyservices.entities.address.dto.AddressMapper;
+import epicode.it.energyservices.entities.address.dto.AddressResponse;
+import epicode.it.energyservices.entities.address.dto.AddressResponseForCustomer;
 import epicode.it.energyservices.entities.invoice.Invoice;
 import epicode.it.energyservices.entities.invoice.InvoiceRepo;
 import epicode.it.energyservices.entities.invoice.dto.InvoiceResponseForCustomer;
@@ -17,10 +20,14 @@ public class CustomerMapper {
     private ModelMapper modelMapper = new ModelMapper();
 
     @Autowired
+    private AddressMapper addressMapper;
+
+    @Autowired
     private InvoiceRepo invoiceRepo;
 
     public CustomerResponse toCustomerResponse(Customer e) {
         CustomerResponse customerResponse = modelMapper.map(e, CustomerResponse.class);
+        System.out.println(e.getAddresses());
         customerResponse.setId(e.getId());
         List<Invoice> invoices = invoiceRepo.findAllByVatCode(e.getVatCode());
         List<InvoiceResponseForCustomer> invoiceResponses = new ArrayList<>();

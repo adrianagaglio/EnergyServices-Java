@@ -44,6 +44,7 @@ public class EmailSvc {
     public String sendEmailHtml(@Valid EmailRequest request) {
 
         try {
+
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message);
 
@@ -52,7 +53,7 @@ public class EmailSvc {
             helper.setText(request.getBody(), true);
             helper.setFrom(from);
 
-//            mailSender.send(message);
+            mailSender.send(message);
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }

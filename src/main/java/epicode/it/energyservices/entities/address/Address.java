@@ -4,6 +4,7 @@ import epicode.it.energyservices.entities.city.City;
 import epicode.it.energyservices.entities.sys_user.customer.Customer;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 @Entity
 @Data
@@ -15,11 +16,12 @@ public class Address {
     private String street;
     private String addressNumber;
     private int cap;
-    @ManyToOne
-    @JoinColumn(name = "city_id", referencedColumnName = "id")
-    private City city;
+    private String city;
+    private String district;
+    private String districtCode;
     @ManyToOne
     @JoinColumn(name = "customer_id")
+    @ToString.Exclude
     private Customer customer;
 
 
