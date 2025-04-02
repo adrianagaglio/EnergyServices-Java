@@ -55,5 +55,5 @@ Dati:
 - L'applicazione si aggiornarà automaticamente ad ogni modifica del file sorgente.
 
 ## Link al frontend
-- [EnergyService Frontend Web App](energy-services.netlify.app)
+- [EnergyService Frontend Web App](https://energy-services.netlify.app)
 - [EnergyService Frontend GitHub](https://github.com/adrianagaglio/EnergyServices-Angular)
